@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { Signal, useMountAnimation, ButtonInput } from "../common";
@@ -49,10 +49,4 @@ export function DetailScreen() {
       </div>
     </DetailScreenContainer>
   );
-}
-
-function useLocation(): {
-  state: { signal: Signal; page: number; filter: string };
-} {
-  throw new Error("Function not implemented.");
 }
