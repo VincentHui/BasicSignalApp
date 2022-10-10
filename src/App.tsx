@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useTransition, animated, config } from "react-spring";
+import FeedScreen from "./screens/FeedScreen";
+import { DetailScreen } from "./screens/DetailScreen";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const location = useLocation();
+  const transitions = useTransition(location, {
+    from: {
+      opacity: 0,
+      transform: "translate3d(0,40%,0) ",
+      position: "absolute",
+    },
+    enter: {
+      opacity: 1,
+      transform: "translate3d(0,0,0) ",
+      position: "absolute",
+    },
+    leave: {
+      opacity: 0,
+      transform: "translate3d(0,-40%,0) ",
+      position: "absolute",
+    },
+    config: config.default,
+  });
+
+  return transitions((style) => (
+    <animated.div style={{ ...style, position: "absolute" }}>
+      <Routes>
+        <Route path="/" element={<FeedScreen />} />
+        <Route path="/details" element={<DetailScreen />} />
+      </Routes>
+    </animated.div>
+  ));
 }
 
 export default App;
